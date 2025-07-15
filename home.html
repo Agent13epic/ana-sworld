@@ -1,29 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>For My Love | Home</title>
-  <link rel="stylesheet" href="css/home.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background: linear-gradient(to right, #b799ff, #e0b3ff);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .music-toggle {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(0,0,0,0.5);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .hamburger {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hamburger span {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    nav {
+      position: absolute;
+      top: 3.5rem;
+      right: 1rem;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      padding: 1rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .time-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .time-container div {
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+    }
+
+    .bible-verse {
+      margin-top: 2rem;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
-  <audio autoplay loop id="bgMusic">
-    <source src="assets/audio/background.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <div class="music-toggle" onclick="toggleMusic()">🔊 Mute</div>
 
-  <div class="sidebar">
-    <div class="menu-btn">☰</div>
-    <nav class="menu">
-      <ul>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="love-letters.html">Love Letters</a></li>
-        <li><a href="bucket-list.html">Bucket List</a></li>
-        <li><a href="calendar.html">Calendar</a></li>
-        <li><a href="#" id="timeTogether">Our Time Together</a></li>
-      </ul>
-    </nav>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
   </div>
+
+  <nav id="menu">
+    <a href="gallery.html">Gallery</a>
+    <a href="love-letters.html">Love Letters</a>
+    <a href="bucket-list.html">Bucket List</a>
+    <a href="calendar.html">Calendar</a>
+    <a href="time-together.html">Our Time Together</a>
+  </nav>
 
   <div class="main-content">
     <h1>Welcome My Love</h1>
@@ -39,13 +130,52 @@
       <div><span id="seconds">0</span> Seconds</div>
     </div>
 
-    <!-- New rotating Bible verse container -->
     <div class="bible-verse">
-      <p id="verse-text">"I have found the one whom my soul loves."</p>
-      <p id="verse-reference">Song of Solomon 3:4</p>
+      <p id="verse-text">Loading verse...</p>
+      <p id="verse-reference"></p>
     </div>
   </div>
 
-  <script src="js/home.js"></script>
+  <audio id="bgm" autoplay loop>
+    <source src="assets/audio/background.mp3" type="audio/mpeg">
+    <source src="assets/audio/background.ogg" type="audio/ogg">
+  </audio>
+
+  <script>
+    const music = document.getElementById('bgm');
+    const toggle = document.querySelector('.music-toggle');
+    let isPlaying = true;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause();
+        toggle.textContent = '🔈 Unmute';
+      } else {
+        music.play();
+        toggle.textContent = '🔊 Mute';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Time together calculation (example)
+    function updateTimeTogether() {
+      // Your existing time calculation code here
+    }
+    
+    // Bible verse loading (example)
+    function loadBibleVerse() {
+      // Your existing verse loading code here
+    }
+    
+    // Initialize
+    updateTimeTogether();
+    loadBibleVerse();
+    setInterval(updateTimeTogether, 1000);
+  </script>
 </body>
 </html>
