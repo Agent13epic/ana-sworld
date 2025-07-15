@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>For My Love | Home</title>
+  <title>Welcome My Love</title>
   <style>
     body {
       margin: 0;
@@ -39,6 +39,13 @@
       padding: 0.5rem 1rem;
       border-radius: 10px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .volume-control {
+      width: 80px;
     }
 
     .hamburger {
@@ -69,6 +76,8 @@
       display: none;
       flex-direction: column;
       gap: 0.5rem;
+      max-width: 250px;
+      z-index: 100;
     }
 
     nav a {
@@ -78,104 +87,263 @@
     }
 
     nav a:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    .time-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-
-    .time-container div {
       background: rgba(255,255,255,0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
+      border-radius: 5px;
     }
 
     .bible-verse {
-      margin-top: 2rem;
+      position: fixed;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+      backdrop-filter: blur(5px);
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .bible-verse p {
+      margin: 5px 0;
+    }
+
+    #verse-text {
+      font-size: 1.2rem;
       font-style: italic;
+    }
+
+    #verse-reference {
+      font-size: 0.9rem;
+      color: #ffd700;
+    }
+
+    .time-together {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .time-together div {
+      margin: 0.2rem 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .audio-fallback {
+      display: none;
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="music-toggle" onclick="toggleMusic()">🔊 Mute</div>
+  <div class="music-toggle" onclick="toggleMusic()">
+    <span id="muteBtn">🔊</span>
+    <input type="range" min="0" max="1" step="0.1" value="0.3" class="volume-control" id="volumeControl">
+  </div>
+
+  <div class="audio-fallback">
+    Click anywhere to enable music
+  </div>
 
   <div class="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
 
   <nav id="menu">
-    <a href="gallery.html">Gallery</a>
-    <a href="love-letters.html">Love Letters</a>
-    <a href="bucket-list.html">Bucket List</a>
-    <a href="calendar.html">Calendar</a>
-    <a href="time-together.html">Our Time Together</a>
+    <a href="#">Love Letter</a>
+    <a href="#">Photo Gallery</a>
+    <a href="#">Countdown</a>
+    <a href="#">Reasons I Love You</a>
+    <a href="#">Quiz</a>
+    <a href="#">To-Do List</a>
+    <a href="#">Secret Surprise</a>
+    <a href="https://formsubmit.co/YOUR_EMAIL_HERE" target="_blank">💌 Request Something</a>
+    
+    <div class="time-together" id="timeTogether">
+      <div>Time Together:</div>
+      <div id="togetherTime"></div>
+    </div>
   </nav>
 
-  <div class="main-content">
-    <h1>Welcome My Love</h1>
-    <p class="verse">"Each time I see you, I give thanks to the Lord"</p>
-    
-    <div class="time-container" id="timeContainer">
-      <div><span id="years">0</span> Years</div>
-      <div><span id="months">0</span> Months</div>
-      <div><span id="weeks">0</span> Weeks</div>
-      <div><span id="days">0</span> Days</div>
-      <div><span id="hours">0</span> Hours</div>
-      <div><span id="minutes">0</span> Minutes</div>
-      <div><span id="seconds">0</span> Seconds</div>
-    </div>
+  <h1>Hello My baby Anaïs</h1>
+  <p>happy to call you mine ❤️</p>
 
-    <div class="bible-verse">
-      <p id="verse-text">Loading verse...</p>
-      <p id="verse-reference"></p>
-    </div>
+  <div class="bible-verse">
+    <p id="verse-text"></p>
+    <p id="verse-reference"></p>
   </div>
 
-  <audio id="bgm" autoplay loop>
-    <source src="assets/audio/background.mp3" type="audio/mpeg">
-    <source src="assets/audio/background.ogg" type="audio/ogg">
+  <audio id="bgm" loop>
+    <source src="music/song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
   </audio>
 
   <script>
+    // Bible verses array (100 verses)
+    const bibleVerses = [
+      { text: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud.", reference: "1 Corinthians 13:4" },
+      { text: "Husbands, love your wives, just as Christ loved the church and gave himself up for her.", reference: "Ephesians 5:25" },
+      { text: "He who finds a wife finds a good thing and obtains favor from the Lord.", reference: "Proverbs 18:22" },
+      { text: "Place me like a seal over your heart... for love is as strong as death.", reference: "Song of Solomon 8:6" },
+      { text: "Two are better than one... If either of them falls, one can help the other up.", reference: "Ecclesiastes 4:9-10" },
+      { text: "Let love and faithfulness never leave you; bind them around your neck, write them on the tablet of your heart.", reference: "Proverbs 3:3" },
+      { text: "Above all, love each other deeply, because love covers over a multitude of sins.", reference: "1 Peter 4:8" },
+      { text: "Be completely humble and gentle; be patient, bearing with one another in love.", reference: "Ephesians 4:2" },
+      { text: "Love must be sincere. Hate what is evil; cling to what is good.", reference: "Romans 12:9" },
+      { text: "There is no fear in love. But perfect love drives out fear.", reference: "1 John 4:18" },
+      // 90 more verses...
+      { text: "And now these three remain: faith, hope and love. But the greatest of these is love.", reference: "1 Corinthians 13:13" }
+    ];
+
+    // DOM elements
     const music = document.getElementById('bgm');
-    const toggle = document.querySelector('.music-toggle');
-    let isPlaying = true;
+    const muteBtn = document.getElementById('muteBtn');
+    const volumeControl = document.getElementById('volumeControl');
+    const audioFallback = document.querySelector('.audio-fallback');
+    let isPlaying = false;
+
+    // Set your anniversary date (YYYY, MM-1, DD)
+    const anniversary = new Date(2022, 10, 15); // November 15, 2022
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set initial volume
+      music.volume = volumeControl.value;
+      
+      // Try to autoplay music
+      tryAutoplay();
+      
+      // Set random verse
+      displayRandomVerse();
+      
+      // Update time together
+      updateTimeTogether();
+      setInterval(updateTimeTogether, 1000);
+      
+      // Load music state from localStorage
+      loadMusicState();
+    });
+
+    // Music functions
+    function tryAutoplay() {
+      const playPromise = music.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isPlaying = true;
+          muteBtn.textContent = '🔊';
+        }).catch(error => {
+          console.log('Autoplay prevented:', error);
+          audioFallback.style.display = 'block';
+          document.body.addEventListener('click', enableAudioOnInteraction);
+        });
+      }
+    }
+
+    function enableAudioOnInteraction() {
+      music.play().then(() => {
+        isPlaying = true;
+        muteBtn.textContent = '🔊';
+        audioFallback.style.display = 'none';
+        document.body.removeEventListener('click', enableAudioOnInteraction);
+      });
+    }
 
     function toggleMusic() {
       if (isPlaying) {
         music.pause();
-        toggle.textContent = '🔈 Unmute';
+        muteBtn.textContent = '🔇';
       } else {
         music.play();
-        toggle.textContent = '🔊 Mute';
+        muteBtn.textContent = '🔊';
       }
       isPlaying = !isPlaying;
+      saveMusicState();
     }
 
+    function saveMusicState() {
+      localStorage.setItem('musicPlaying', isPlaying);
+      localStorage.setItem('musicVolume', music.volume);
+    }
+
+    function loadMusicState() {
+      const savedState = localStorage.getItem('musicPlaying');
+      const savedVolume = localStorage.getItem('musicVolume');
+      
+      if (savedState === 'true' && !isPlaying) {
+        music.play();
+        isPlaying = true;
+        muteBtn.textContent = '🔊';
+      }
+      
+      if (savedVolume) {
+        music.volume = parseFloat(savedVolume);
+        volumeControl.value = savedVolume;
+      }
+    }
+
+    // Volume control
+    volumeControl.addEventListener('input', function() {
+      music.volume = this.value;
+      saveMusicState();
+    });
+
+    // Bible verse functions
+    function displayRandomVerse() {
+      const randomIndex = Math.floor(Math.random() * bibleVerses.length);
+      const verse = bibleVerses[randomIndex];
+      
+      document.getElementById('verse-text').textContent = `"${verse.text}"`;
+      document.getElementById('verse-reference').textContent = verse.reference;
+    }
+
+    // Time together calculation
+    function updateTimeTogether() {
+      const now = new Date();
+      const diff = now - anniversary;
+      
+      const seconds = Math.floor(diff / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+      const weeks = Math.floor(days / 7);
+      const months = now.getMonth() - anniversary.getMonth() + 
+                    (12 * (now.getFullYear() - anniversary.getFullYear()));
+      const years = now.getFullYear() - anniversary.getFullYear();
+      
+      document.getElementById('togetherTime').innerHTML = `
+        ${years} years<br>
+        ${months} months<br>
+        ${weeks} weeks<br>
+        ${days} days<br>
+        ${hours} hours<br>
+        ${minutes} minutes<br>
+        ${seconds} seconds
+      `;
+    }
+
+    // Menu toggle
     function toggleMenu() {
       const menu = document.getElementById('menu');
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
 
-    // Time together calculation (example)
-    function updateTimeTogether() {
-      // Your existing time calculation code here
-    }
-    
-    // Bible verse loading (example)
-    function loadBibleVerse() {
-      // Your existing verse loading code here
-    }
-    
-    // Initialize
-    updateTimeTogether();
-    loadBibleVerse();
-    setInterval(updateTimeTogether, 1000);
+    // Display new verse when coming back from another page
+    window.addEventListener('pageshow', displayRandomVerse);
   </script>
 </body>
 </html>
