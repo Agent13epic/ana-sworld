@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secret Surprise</title>
+  <style>
+    /* Menu Styles (same as other pages) */
+    .hamburger {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+    .hamburger span {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 80px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: right 0.3s ease;
+      z-index: 999;
+    }
+    nav.active {
+      right: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Surprise Page Styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background: linear-gradient(to right, #b799ff, #e0b3ff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .gateway {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 500px;
+      margin: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .surprise-content {
+      display: none;
+      animation: fadeIn 1s;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 10px;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-3px);
+    }
+
+    .mood-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .mood-btn {
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .mood-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .heart {
+      font-size: 2rem;
+      animation: pulse 1.5s infinite;
+      display: inline-block;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+      .gateway {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu Button -->
+  <div class="hamburger menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav id="menu">
+    <a href="home.html">Home</a>
+    <a href="gallery.html">Photo Gallery</a>
+    <a href="countdown.html">Countdowns</a>
+    <a href="bucketlist.html">Bucket List</a>
+    <a href="reasons.html">Reasons I Love You</a>
+    <a href="surprise.html">Secret Surprise</a>
+    <a href="https://formsubmit.co/el/mzekavalentinemapri@gmail.com" target="_blank">💌 Request Something</a>
+  </nav>
+
+  <!-- Emotional Gateway -->
+  <div class="gateway" id="gateway">
+    <h2>Before We Begin...</h2>
+    <p>This is a special space for when you're feeling:</p>
+    
+    <div class="mood-selector">
+      <div class="mood-btn" onclick="selectMood('sad')">😢 Sad</div>
+      <div class="mood-btn" onclick="selectMood('angry')">😠 Angry</div>
+      <div class="mood-btn" onclick="selectMood('miss')">💔 Missing Me</div>
+      <div class="mood-btn" onclick="selectMood('down')">😞 Feeling Down</div>
+    </div>
+
+    <p>Select how you're feeling to continue</p>
+  </div>
+
+  <!-- Hidden Surprise Content -->
+  <div class="gateway surprise-content" id="surprise-content">
+    <h2>For My Beautiful Anaïs <span class="heart">❤️</span></h2>
+    
+    <div id="personalized-message">
+      <!-- Dynamic message based on mood -->
+    </div>
+
+    <p>Remember that no matter what you're feeling right now:</p>
+    <ul style="text-align: left; margin-left: 20px;">
+      <li>You are <span class="highlight">loved</span> beyond measure</li>
+      <li>This feeling is <span class="highlight">temporary</span></li>
+      <li>I'm always <span class="highlight">here for you</span>, even when apart</li>
+    </ul>
+
+    <div style="margin-top: 30px;">
+      <button class="btn" onclick="location.reload()">Back to Gateway</button>
+    </div>
+  </div>
+
+  <script>
+    // Menu Toggle
+    document.querySelector('.menu-btn').addEventListener('click', function() {
+      document.getElementById('menu').classList.toggle('active');
+      this.classList.toggle('active');
+    });
+
+    // Mood Selection
+    function selectMood(mood) {
+      const gateway = document.getElementById('gateway');
+      const content = document.getElementById('surprise-content');
+      const message = document.getElementById('personalized-message');
+      
+      // Create personalized message based on mood
+      let personalizedMsg = '';
+      switch(mood) {
+        case 'sad':
+          personalizedMsg = `
+            <p>My love, I wish I could be there to wipe away your tears. 
+            Remember that even when you're sad, you're still the most 
+            beautiful soul I know. This too shall pass.</p>
+            <p>Here's something to make you smile: Remember when we [insert 
+            special memory here]? That's how I'll always see you - full of 
+            joy and light.</p>
+          `;
+          break;
+        case 'angry':
+          personalizedMsg = `
+            <p>Take a deep breath, my love. Whatever is making you angry 
+            isn't worth your peace. You're stronger than whatever is 
+            bothering you right now.</p>
+            <p>Think of our happiest moments together - like when we 
+            [insert calming memory]. Let that warmth replace the anger.</p>
+          `;
+          break;
+        case 'miss':
+          personalizedMsg = `
+            <p>I miss you too, more than words can say. But distance is 
+            just a test of how far love can travel. And our love? It spans 
+            continents.</p>
+            <p>Close your eyes and remember my arms around you. That's 
+            where I'll always be, even when we're apart.</p>
+          `;
+          break;
+        case 'down':
+          personalizedMsg = `
+            <p>Even on your lowest days, you shine brighter than most 
+            people do on their best. This feeling won't last, but my love 
+            for you will.</p>
+            <p>Remember: You're the girl who [insert personal achievement 
+            or quality]. That's who you truly are.</p>
+          `;
+          break;
+      }
+      
+      message.innerHTML = personalizedMsg;
+      gateway.style.display = 'none';
+      content.style.display = 'block';
+    }
+
+    // Optional: Add confetti effect when surprise is revealed
+    function showConfetti() {
+      // You can add a confetti library here if desired
+    }
+  </script>
+</body>
+</html>
