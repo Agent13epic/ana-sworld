@@ -1,34 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome My Love</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Load Bible verses first -->
-  <script src="bible-verses.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background: linear-gradient(to right, #b799ff, #e0b3ff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      margin-top: 80px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    /* Menu Styles */
+    .hamburger {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    .hamburger span {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 80px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: right 0.3s ease;
+      z-index: 999;
+    }
+
+    nav.active {
+      right: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Music Controls */
+    .music-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 10px 15px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+    }
+
+    .music-controls button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #volumeSlider {
+      width: 80px;
+    }
+
+    #nowPlaying {
+      font-size: 0.8rem;
+      margin-left: 5px;
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Bible Verse */
+    .bible-verse {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.8);
+      color: #8000ff;
+      padding: 12px 20px;
+      border-radius: 20px;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #verse-text {
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+
+    #verse-reference {
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    /* Time Together */
+    .time-together {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    /* Gallery */
+    #gallery {
+      display: none;
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .photo-gallery h3, .video-gallery h3 {
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .photos, .videos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    .photos img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .photos img:hover {
+      transform: scale(1.03);
+    }
+
+    .videos video {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Countdown Section */
+    #countdown {
+      display: none;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 15px;
+    }
+
+    #countdown-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    #countdown-form input {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    #countdown-form button {
+      padding: 10px;
+      background: #8000ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #countdown-display {
+      font-size: 1.5rem;
+      margin-top: 20px;
+    }
+
+    /* Calendar and Clock */
+    .date-time {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .calendar {
+      background: white;
+      color: #8000ff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .calendar .month-year {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .calendar .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .calendar .day {
+      padding: 5px;
+      font-size: 0.9rem;
+    }
+
+    .calendar .date {
+      padding: 5px;
+      font-size: 0.9rem;
+    }
+
+    .calendar .today {
+      background: #8000ff;
+      color: white;
+      border-radius: 50%;
+    }
+
+    .clock {
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .photos, .videos {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+      
+      .music-controls {
+        width: 90%;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="music-toggle" id="musicControls">
-    <span id="muteBtn">🔊</span>
-    <input type="range" min="0" max="1" step="0.1" value="0.3" class="volume-control" id="volumeControl">
+  <!-- Menu Button -->
+  <div class="hamburger menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 
-  <div class="audio-fallback">
-    Click anywhere to enable music
-  </div>
-
-  <div class="hamburger menu-btn" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-
-  <nav class="sidebar" id="menu">
-    <a href="#">Love Letter</a>
-    <a href="#">Photo Gallery</a>
-    <a href="#">Countdown</a>
+  <!-- Navigation Menu -->
+  <nav id="menu">
+    <a href="#" class="home-link">Home</a>
+    <a href="#" class="gallery-link">Photo Gallery</a>
+    <a href="#" class="countdown-link">Countdown</a>
     <a href="#">Reasons I Love You</a>
-    <a href="#">Quiz</a>
-    <a href="#">To-Do List</a>
+    <a href="#">Bucket List</a>
     <a href="#">Secret Surprise</a>
     <a href="https://formsubmit.co/YOUR_EMAIL_HERE" target="_blank">💌 Request Something</a>
     
@@ -44,61 +336,130 @@
     </div>
   </nav>
 
-  <h1>Hello My baby Anaïs</h1>
-  <p>Every time I see you I give Thanks to God❤️</p>
+  <!-- Main Content -->
+  <div id="home">
+    <h1>Hello My baby Anaïs</h1>
+    <p>Every time I see you I give Thanks to God❤️</p>
+    
+    <!-- Calendar and Clock -->
+    <div class="date-time">
+      <div class="calendar" id="calendar"></div>
+      <div class="clock" id="clock"></div>
+    </div>
+  </div>
 
+  <!-- Gallery Section -->
+  <section id="gallery">
+    <h2>Our Memories</h2>
+    <div class="gallery-container">
+      <div class="photo-gallery">
+        <h3>Photos</h3>
+        <div class="photos">
+          <!-- Add your photos here -->
+          <img src="images/photo1.jpg" alt="Our photo 1">
+          <img src="images/photo2.jpg" alt="Our photo 2">
+          <img src="images/photo3.jpg" alt="Our photo 3">
+          <img src="images/photo4.jpg" alt="Our photo 4">
+        </div>
+      </div>
+      
+      <div class="video-gallery">
+        <h3>Videos</h3>
+        <div class="videos">
+          <!-- Add your videos here -->
+          <video controls>
+            <source src="videos/video1.mp4" type="video/mp4">
+          </video>
+          <video controls>
+            <source src="videos/video2.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countdown Section -->
+  <section id="countdown">
+    <h2>Create Your Countdown</h2>
+    <form id="countdown-form">
+      <input type="text" id="countdown-title" placeholder="Event Title" required>
+      <input type="datetime-local" id="countdown-date" required>
+      <button type="submit">Start Countdown</button>
+    </form>
+    <div id="countdown-display">
+      <h3 id="countdown-event-title"></h3>
+      <div id="countdown-timer"></div>
+    </div>
+  </section>
+
+  <!-- Bible Verse -->
   <div class="bible-verse">
     <p id="verse-text"></p>
     <p id="verse-reference"></p>
   </div>
 
-  <audio id="bgMusic" loop>
-    <source src="music/song.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
+  <!-- Music Controls -->
+  <div class="music-controls">
+    <button id="prevSongBtn">⏮</button>
+    <button id="playPauseBtn">⏸</button>
+    <button id="nextSongBtn">⏭</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
+    <span id="nowPlaying">Now Playing: Our Song</span>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="bgMusic">
+    <!-- Songs will be loaded dynamically -->
   </audio>
 
+  <!-- Bible Verses Data -->
+  <script>
+    // Bible verses array
+    const bibleVerses = [
+      { text: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud.", reference: "1 Corinthians 13:4" },
+      { text: "Husbands, love your wives, just as Christ loved the church and gave himself up for her.", reference: "Ephesians 5:25" },
+      // Add all your 100 verses here...
+      { text: "So now faith, hope, and love abide, these three; but the greatest of these is love.", reference: "1 Corinthians 13:13" }
+    ];
+  </script>
+
+  <!-- Main JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Set anniversary date to April 3, 2025 (months are 0-indexed)
       const anniversary = new Date(2025, 3, 3);
       
-      // Audio controls
-      const bgMusic = document.getElementById('bgMusic');
-      const muteBtn = document.getElementById('muteBtn');
-      const volumeControl = document.getElementById('volumeControl');
-      let isMuted = false;
-      
-      // Set initial volume
-      bgMusic.volume = volumeControl.value;
-      
-      // Mute toggle
-      muteBtn.addEventListener('click', function() {
-        isMuted = !isMuted;
-        bgMusic.muted = isMuted;
-        muteBtn.textContent = isMuted ? '🔇' : '🔊';
-      });
-
-      // Volume control
-      volumeControl.addEventListener('input', function() {
-        bgMusic.volume = this.value;
-      });
-
-      // Check if audio is supported
-      if (typeof bgMusic.play === 'function') {
-        const playPromise = bgMusic.play();
-        
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log('Autoplay prevented:', error);
-            document.querySelector('.audio-fallback').style.display = 'block';
-            document.body.addEventListener('click', function enableAudio() {
-              bgMusic.play();
-              document.body.removeEventListener('click', enableAudio);
-              document.querySelector('.audio-fallback').style.display = 'none';
-            });
-          });
-        }
+      // Menu Toggle
+      function toggleMenu() {
+        document.getElementById('menu').classList.toggle('active');
+        document.querySelector('.hamburger').classList.toggle('active');
       }
+      document.querySelector('.menu-btn').addEventListener('click', toggleMenu);
+
+      // Navigation between sections
+      document.querySelector('.home-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('home').style.display = 'block';
+        document.getElementById('gallery').style.display = 'none';
+        document.getElementById('countdown').style.display = 'none';
+        toggleMenu();
+      });
+      
+      document.querySelector('.gallery-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('home').style.display = 'none';
+        document.getElementById('gallery').style.display = 'block';
+        document.getElementById('countdown').style.display = 'none';
+        toggleMenu();
+      });
+      
+      document.querySelector('.countdown-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('home').style.display = 'none';
+        document.getElementById('gallery').style.display = 'none';
+        document.getElementById('countdown').style.display = 'block';
+        toggleMenu();
+      });
 
       // Calculate time together
       function updateTimeTogether() {
@@ -126,27 +487,197 @@
       // Update time every second
       updateTimeTogether();
       setInterval(updateTimeTogether, 1000);
-      
-      // Toggle menu
-      function toggleMenu() {
-        document.getElementById('menu').classList.toggle('active');
-      }
-      document.querySelector('.menu-btn').addEventListener('click', toggleMenu);
 
-      // Display random verse (using verses from bible-verses.js)
+      // Display random Bible verse
       function displayRandomVerse() {
-        const randomIndex = Math.floor(Math.random() * window.bibleVerses.length);
-        const verse = window.bibleVerses[randomIndex];
+        const randomIndex = Math.floor(Math.random() * bibleVerses.length);
+        const verse = bibleVerses[randomIndex];
         
         document.getElementById('verse-text').textContent = `"${verse.text}"`;
         document.getElementById('verse-reference').textContent = verse.reference;
       }
-
-      // Display random verse on page load
       displayRandomVerse();
-
-      // Also display new verse when coming back from another page
       window.addEventListener('pageshow', displayRandomVerse);
+
+      // Music Player
+      const musicPlayer = {
+        songs: [
+          { title: "Our Special Song", src: "music/song1.mp3" },
+          { title: "Our Favorite Song", src: "music/song2.mp3" }
+          // Add more songs as needed
+        ],
+        currentSongIndex: 0,
+        audio: document.getElementById('bgMusic'),
+        
+        init: function() {
+          this.audio.src = this.songs[this.currentSongIndex].src;
+          document.getElementById('nowPlaying').textContent = `Now Playing: ${this.songs[this.currentSongIndex].title}`;
+          
+          // Event listeners
+          document.getElementById('playPauseBtn').addEventListener('click', () => this.togglePlay());
+          document.getElementById('volumeSlider').addEventListener('input', (e) => {
+            this.audio.volume = e.target.value;
+          });
+          document.getElementById('prevSongBtn').addEventListener('click', () => this.prevSong());
+          document.getElementById('nextSongBtn').addEventListener('click', () => this.nextSong());
+          
+          // Try to autoplay
+          this.tryAutoplay();
+        },
+        
+        tryAutoplay: function() {
+          const playPromise = this.audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.log('Autoplay prevented:', error);
+            });
+          }
+        },
+        
+        togglePlay: function() {
+          if (this.audio.paused) {
+            this.audio.play();
+            document.getElementById('playPauseBtn').textContent = '⏸';
+          } else {
+            this.audio.pause();
+            document.getElementById('playPauseBtn').textContent = '▶';
+          }
+        },
+        
+        prevSong: function() {
+          this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
+          this.loadSong();
+        },
+        
+        nextSong: function() {
+          this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+          this.loadSong();
+        },
+        
+        loadSong: function() {
+          this.audio.src = this.songs[this.currentSongIndex].src;
+          this.audio.play();
+          document.getElementById('nowPlaying').textContent = `Now Playing: ${this.songs[this.currentSongIndex].title}`;
+          document.getElementById('playPauseBtn').textContent = '⏸';
+        }
+      };
+
+      // Initialize music player
+      musicPlayer.init();
+      
+      // Calendar
+      function updateCalendar() {
+        const now = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+                           "July", "August", "September", "October", "November", "December"];
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        
+        const month = now.getMonth();
+        const year = now.getFullYear();
+        const today = now.getDate();
+        
+        // Get first day of month
+        const firstDay = new Date(year, month, 1).getDay();
+        
+        // Get days in month
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        
+        // Create calendar HTML
+        let calendarHTML = `
+          <div class="month-year">${monthNames[month]} ${year}</div>
+          <div class="days">
+        `;
+        
+        // Add day names
+        for (let i = 0; i < 7; i++) {
+          calendarHTML += `<div class="day">${dayNames[i]}</div>`;
+        }
+        
+        // Add empty cells for days before the first day of the month
+        for (let i = 0; i < firstDay; i++) {
+          calendarHTML += `<div class="date"></div>`;
+        }
+        
+        // Add dates
+        for (let i = 1; i <= daysInMonth; i++) {
+          const className = i === today ? 'date today' : 'date';
+          calendarHTML += `<div class="${className}">${i}</div>`;
+        }
+        
+        calendarHTML += `</div>`;
+        document.getElementById('calendar').innerHTML = calendarHTML;
+      }
+      
+      updateCalendar();
+      
+      // Clock
+      function updateClock() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+      }
+      
+      updateClock();
+      setInterval(updateClock, 1000);
+      
+      // Countdown functionality
+      const countdownForm = document.getElementById('countdown-form');
+      countdownForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('countdown-title').value;
+        const dateString = document.getElementById('countdown-date').value;
+        const targetDate = new Date(dateString);
+        
+        if (!title || !dateString || targetDate <= new Date()) {
+          alert('Please enter a valid title and future date');
+          return;
+        }
+        
+        document.getElementById('countdown-event-title').textContent = title;
+        
+        // Save to localStorage
+        localStorage.setItem('countdownTitle', title);
+        localStorage.setItem('countdownDate', dateString);
+        
+        updateCountdown(targetDate);
+      });
+      
+      function updateCountdown(targetDate) {
+        const now = new Date();
+        const diff = targetDate - now;
+        
+        if (diff <= 0) {
+          document.getElementById('countdown-timer').innerHTML = 'The event has arrived!';
+          return;
+        }
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        document.getElementById('countdown-timer').innerHTML = `
+          ${days} days<br>
+          ${hours} hours<br>
+          ${minutes} minutes<br>
+          ${seconds} seconds
+        `;
+      }
+      
+      // Load saved countdown if exists
+      const savedTitle = localStorage.getItem('countdownTitle');
+      const savedDate = localStorage.getItem('countdownDate');
+      
+      if (savedTitle && savedDate) {
+        document.getElementById('countdown-event-title').textContent = savedTitle;
+        const targetDate = new Date(savedDate);
+        
+        updateCountdown(targetDate);
+        setInterval(() => updateCountdown(targetDate), 1000);
+      }
     });
   </script>
 </body>
