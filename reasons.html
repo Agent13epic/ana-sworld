@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reasons I Love You</title>
+  <style>
+    /* Menu Styles */
+    .hamburger {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+    .hamburger span {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 80px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: right 0.3s ease;
+      z-index: 999;
+    }
+    nav.active {
+      right: 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Reasons Page */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      background: linear-gradient(to right, #b799ff, #e0b3ff);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .reasons-container {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin: 60px 0 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 2;
+    }
+
+    .reason-bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      border-radius: 15px;
+      padding: 12px;
+      width: 160px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.5s ease;
+      z-index: 1;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      text-align: center;
+    }
+
+    .reason-bubble:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.05) !important;
+      z-index: 10 !important;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #ffd6ff;
+    }
+
+    @media (max-width: 768px) {
+      .reason-bubble {
+        width: 130px;
+        font-size: 0.75rem;
+        padding: 10px;
+      }
+      h1 {
+        font-size: 1.8rem;
+        margin: 40px 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu Button -->
+  <div class="hamburger menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav id="menu">
+    <a href="home.html">Home</a>
+    <a href="gallery.html">Photo Gallery</a>
+    <a href="countdown.html">Countdowns</a>
+    <a href="bucketlist.html">Bucket List</a>
+    <a href="reasons.html">Reasons I Love You</a>
+    <a href="surprise.html">Secret Surprise</a>
+    <a href="https://formsubmit.co/el/mzekavalentinemapri@gmail.com" target="_blank">💌 Request Something</a>
+  </nav>
+
+  <div class="reasons-container">
+    <h1>Reasons Why I Love You</h1>
+    <!-- Reasons will be dynamically inserted here -->
+  </div>
+
+  <script>
+    // Menu Toggle
+    document.querySelector('.menu-btn').addEventListener('click', function() {
+      document.getElementById('menu').classList.toggle('active');
+      this.classList.toggle('active');
+    });
+
+    // Reasons Data (your exact reasons without numbers)
+    const reasons = [
+      "You made me feel <span class='highlight'>chosen</span>",
+      "You're my <span class='highlight'>soft place</span> to land",
+      "Your <span class='highlight'>nonchalant nature</span> is beautiful",
+      "You give the <span class='highlight'>best cuddles</span>",
+      "You <span class='highlight'>listen</span> and make me feel heard",
+      "You let me be <span class='highlight'>'chalant'</span> my way",
+      "You accept my <span class='highlight'>flaws</span>",
+      "You gave me <span class='highlight'>pinky promises</span>",
+      "You're <span class='highlight'>funny without trying</span>",
+      "You <span class='highlight'>protect your peace</span>",
+      "You made me write <span class='highlight'>love letters</span>",
+      "You don't need spotlight but <span class='highlight'>shine</span>",
+      "You gave me <span class='highlight'>purpose</span>",
+      "You kissed me like it <span class='highlight'>meant something</span>",
+      "You made <span class='highlight'>silence romantic</span>",
+      "You let me see you <span class='highlight'>vulnerable</span>",
+      "You don't like arguments - <span class='highlight'>neither do I</span>",
+      "You made me want to <span class='highlight'>meet your family</span>",
+      "You're my <span class='highlight'>friend</span> first",
+      "You let me <span class='highlight'>love you</span> my way",
+      "You <span class='highlight'>smell like heaven</span>",
+      "You have the <span class='highlight'>prettiest eyes</span>",
+      "You're my <span class='highlight'>inside joke partner</span>",
+      "You taught me to <span class='highlight'>open up</span>",
+      "You don't see your <span class='highlight'>worth</span> - but I do",
+      "You're the one I want to <span class='highlight'>marry</span>",
+      "You make me proud to say <span class='highlight'>'she's mine'</span>",
+      "You make <span class='highlight'>long distance worth it</span>",
+      "I'd choose you in <span class='highlight'>every universe</span>",
+      "You're my <span class='highlight'>forever</span> #VeryMine ❤️"
+    ];
+
+    // Create perfectly spaced bubbles
+    const container = document.querySelector('.reasons-container');
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+    const bubbleWidth = 160;
+    const bubbleHeight = 100;
+    const cols = Math.floor(containerWidth / (bubbleWidth * 1.3));
+    const rows = Math.ceil(reasons.length / cols);
+    
+    // Calculate grid positions
+    const gridPositions = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        if ((row * cols + col) < reasons.length) {
+          gridPositions.push({
+            x: (col * (containerWidth / cols)) + (containerWidth / cols - bubbleWidth) / 2,
+            y: 100 + (row * (containerHeight / (rows + 1)))
+          });
+        }
+      }
+    }
+    
+    // Shuffle positions slightly for organic look
+    gridPositions.forEach(pos => {
+      pos.x += (Math.random() * 40) - 20;
+      pos.y += (Math.random() * 40) - 20;
+    });
+
+    // Create bubbles
+    reasons.forEach((reason, index) => {
+      if (index >= gridPositions.length) return;
+      
+      const bubble = document.createElement('div');
+      bubble.className = 'reason-bubble';
+      bubble.innerHTML = reason;
+      
+      const pos = gridPositions[index];
+      const rotation = (Math.random() * 10) - 5;
+      const scale = 0.9 + (Math.random() * 0.2);
+      
+      bubble.style.left = `${pos.x}px`;
+      bubble.style.top = `${pos.y}px`;
+      bubble.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+      
+      container.appendChild(bubble);
+      
+      // Make draggable
+      makeDraggable(bubble);
+    });
+
+    // Make bubbles draggable
+    function makeDraggable(element) {
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      
+      element.onmousedown = dragMouseDown;
+      
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+        element.style.zIndex = 100;
+      }
+      
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+      }
+      
+      function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
+  </script>
+</body>
+</html>
