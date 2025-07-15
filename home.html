@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For My Love | Home</title>
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+  <audio autoplay loop id="bgMusic">
+    <source src="assets/audio/background.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
+  <div class="sidebar">
+    <div class="menu-btn">☰</div>
+    <nav class="menu">
+      <ul>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="love-letters.html">Love Letters</a></li>
+        <li><a href="bucket-list.html">Bucket List</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="#" id="timeTogether">Our Time Together</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="main-content">
+    <h1>Welcome My Love</h1>
+    <p class="verse">"Each time I see you, I give thanks to the Lord"</p>
+    
+    <div class="time-container" id="timeContainer">
+      <div><span id="years">0</span> Years</div>
+      <div><span id="months">0</span> Months</div>
+      <div><span id="weeks">0</span> Weeks</div>
+      <div><span id="days">0</span> Days</div>
+      <div><span id="hours">0</span> Hours</div>
+      <div><span id="minutes">0</span> Minutes</div>
+      <div><span id="seconds">0</span> Seconds</div>
+    </div>
+
+    <!-- New rotating Bible verse container -->
+    <div class="bible-verse">
+      <p id="verse-text">"I have found the one whom my soul loves."</p>
+      <p id="verse-reference">Song of Solomon 3:4</p>
+    </div>
+  </div>
+
+  <script src="js/home.js"></script>
+</body>
+</html>
