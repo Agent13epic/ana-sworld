@@ -1,0 +1,78 @@
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #b799ff, #e0b3ff);
+  overflow: hidden;
+  position: relative;
+}
+
+.login-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+  z-index: 2;
+}
+
+.login-box h2 {
+  margin-bottom: 1rem;
+  color: #8000ff;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #8000ff;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #5a00b0;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.quote {
+  position: absolute;
+  font-size: 0.85rem;
+  color: white;
+  opacity: 0.8;
+  max-width: 150px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.quote:nth-child(1) { top: 10%; left: 5%; }
+.quote:nth-child(2) { top: 20%; right: 5%; }
+.quote:nth-child(3) { bottom: 15%; left: 10%; }
+.quote:nth-child(4) { bottom: 10%; right: 10%; }
