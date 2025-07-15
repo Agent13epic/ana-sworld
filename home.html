@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome My Love</title>
   <style>
-    /* ALL YOUR EXISTING STYLES REMAIN UNCHANGED */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -18,67 +17,342 @@
       text-align: center;
       position: relative;
     }
-    /* [KEEP ALL OTHER EXISTING STYLES] */
-    
-    /* NEW GALLERY LINK STYLE (minimal addition) */
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      margin-top: 80px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    /* Menu Styles */
+    .hamburger {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      width: 30px;
+      height: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+
+    .hamburger span {
+      height: 4px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 80px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: right 0.3s ease;
+      z-index: 999;
+    }
+
+    nav.active {
+      right: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Music Controls */
+    .music-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      padding: 10px 15px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      backdrop-filter: blur(5px);
+    }
+
+    .music-controls button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #volumeSlider {
+      width: 80px;
+    }
+
+    #nowPlaying {
+      font-size: 0.8rem;
+      margin-left: 5px;
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Bible Verse (Home Page Only) */
+    .bible-verse {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.8);
+      color: #8000ff;
+      padding: 12px 20px;
+      border-radius: 20px;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    #verse-text {
+      font-style: italic;
+      margin-bottom: 5px;
+    }
+
+    #verse-reference {
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    /* Time Together */
+    .time-together {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    /* Gallery Link */
     .view-gallery {
       display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
+      margin: 30px 0;
+      padding: 12px 25px;
       background: rgba(255,255,255,0.2);
       color: white;
       text-decoration: none;
-      border-radius: 20px;
+      border-radius: 30px;
       transition: all 0.3s;
     }
+
     .view-gallery:hover {
       background: rgba(255,255,255,0.3);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .music-controls {
+        width: 90%;
+        justify-content: center;
+      }
+      h1 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- ALL YOUR EXISTING CONTENT REMAINS UNCHANGED -->
+  <!-- Menu Button -->
   <div class="hamburger menu-btn">
     <span></span>
     <span></span>
     <span></span>
   </div>
 
+  <!-- Navigation Menu -->
   <nav id="menu">
-    <!-- YOUR EXISTING MENU ITEMS -->
     <a href="#" class="home-link">Home</a>
-    <!-- [OTHER EXISTING LINKS] -->
-    
-    <!-- NEW GALLERY LINK ADDED TO MENU -->
-    <a href="gallery.html" class="gallery-link">View Gallery</a>
+    <a href="gallery.html">Photo Gallery</a>
+    <a href="countdown.html">Countdowns</a>
+    <a href="bucketlist.html">Bucket List</a>
+    <a href="reasons.html">Reasons I Love You</a>
+    <a href="surprise.html">Secret Surprise</a>
+    <a href="https://formsubmit.co/YOUR_EMAIL_HERE" target="_blank">💌 Request Something</a>
     
     <div class="time-together">
-      <!-- YOUR EXISTING TIME TOGETHER COUNTER -->
+      <div>Time Together:</div>
+      <div id="years">0</div> years<br>
+      <div id="months">0</div> months<br>
+      <div id="weeks">0</div> weeks<br>
+      <div id="days">0</div> days<br>
+      <div id="hours">0</div> hours<br>
+      <div id="minutes">0</div> minutes<br>
+      <div id="seconds">0</div> seconds
     </div>
   </nav>
 
+  <!-- Main Content -->
   <h1>Hello My baby Anaïs</h1>
   <p>Every time I see you I give Thanks to God❤️</p>
 
-  <!-- NEW GALLERY LINK ADDED TO MAIN CONTENT -->
+  <!-- Gallery Link -->
   <a href="gallery.html" class="view-gallery">View Our Memories</a>
 
-  <!-- ALL YOUR EXISTING CONTENT (BIBLE VERSE, MUSIC CONTROLS, ETC.) -->
+  <!-- Bible Verse (Home Page Only) -->
   <div class="bible-verse">
-    <p id="verse-text"></p>
-    <p id="verse-reference"></p>
+    <p id="verse-text">"Love is patient, love is kind."</p>
+    <p id="verse-reference">1 Corinthians 13:4</p>
   </div>
 
+  <!-- Music Controls -->
   <div class="music-controls">
-    <!-- YOUR EXISTING MUSIC PLAYER -->
+    <button id="prevSongBtn">⏮</button>
+    <button id="playPauseBtn">⏸</button>
+    <button id="nextSongBtn">⏭</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5">
+    <span id="nowPlaying">Now Playing: Our Song</span>
   </div>
 
+  <!-- Audio Element -->
   <audio id="bgMusic"></audio>
 
-  <!-- YOUR EXISTING SCRIPTS -->
+  <!-- JavaScript -->
   <script>
-    // ALL YOUR EXISTING JAVASCRIPT CODE
+    // Menu Toggle
+    document.querySelector('.menu-btn').addEventListener('click', function() {
+      document.getElementById('menu').classList.toggle('active');
+      this.classList.toggle('active');
+    });
+
+    // Time Together Counter
+    function updateTimeTogether() {
+      const anniversary = new Date(2025, 3, 3); // April 3, 2025
+      const now = new Date();
+      const diff = now - anniversary;
+      
+      const seconds = Math.floor(diff / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+      const weeks = Math.floor(days / 7);
+      const months = now.getMonth() - anniversary.getMonth() + 
+                    (12 * (now.getFullYear() - anniversary.getFullYear()));
+      const years = now.getFullYear() - anniversary.getFullYear();
+      
+      document.getElementById('years').textContent = years;
+      document.getElementById('months').textContent = months;
+      document.getElementById('weeks').textContent = weeks;
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+    setInterval(updateTimeTogether, 1000);
+    updateTimeTogether();
+
+    // Bible Verses
+    const bibleVerses = [
+      { text: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud.", reference: "1 Corinthians 13:4" },
+      { text: "Husbands, love your wives, just as Christ loved the church and gave himself up for her.", reference: "Ephesians 5:25" },
+      { text: "So now faith, hope, and love abide, these three; but the greatest of these is love.", reference: "1 Corinthians 13:13" }
+    ];
+    
+    function displayRandomVerse() {
+      const randomIndex = Math.floor(Math.random() * bibleVerses.length);
+      const verse = bibleVerses[randomIndex];
+      document.getElementById('verse-text').textContent = `"${verse.text}"`;
+      document.getElementById('verse-reference').textContent = verse.reference;
+    }
+    displayRandomVerse();
+
+    // Music Player
+    const musicPlayer = {
+      songs: [
+        { title: "Our Special Song", src: "music/song1.mp3" },
+        { title: "Our Favorite Song", src: "music/song2.mp3" }
+      ],
+      currentSongIndex: 0,
+      audio: document.getElementById('bgMusic'),
+      
+      init: function() {
+        this.audio.src = this.songs[this.currentSongIndex].src;
+        document.getElementById('nowPlaying').textContent = `Now Playing: ${this.songs[this.currentSongIndex].title}`;
+        
+        document.getElementById('playPauseBtn').addEventListener('click', () => this.togglePlay());
+        document.getElementById('volumeSlider').addEventListener('input', (e) => {
+          this.audio.volume = e.target.value;
+        });
+        document.getElementById('prevSongBtn').addEventListener('click', () => this.prevSong());
+        document.getElementById('nextSongBtn').addEventListener('click', () => this.nextSong());
+        
+        this.tryAutoplay();
+      },
+      
+      tryAutoplay: function() {
+        const playPromise = this.audio.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log('Autoplay prevented:', error);
+          });
+        }
+      },
+      
+      togglePlay: function() {
+        if (this.audio.paused) {
+          this.audio.play();
+          document.getElementById('playPauseBtn').textContent = '⏸';
+        } else {
+          this.audio.pause();
+          document.getElementById('playPauseBtn').textContent = '▶';
+        }
+      },
+      
+      prevSong: function() {
+        this.currentSongIndex = (this.currentSongIndex - 1 + this.songs.length) % this.songs.length;
+        this.loadSong();
+      },
+      
+      nextSong: function() {
+        this.currentSongIndex = (this.currentSongIndex + 1) % this.songs.length;
+        this.loadSong();
+      },
+      
+      loadSong: function() {
+        this.audio.src = this.songs[this.currentSongIndex].src;
+        this.audio.play();
+        document.getElementById('nowPlaying').textContent = `Now Playing: ${this.songs[this.currentSongIndex].title}`;
+        document.getElementById('playPauseBtn').textContent = '⏸';
+      }
+    };
+    musicPlayer.init();
   </script>
 </body>
 </html>
